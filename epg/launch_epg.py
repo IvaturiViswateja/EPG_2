@@ -22,7 +22,9 @@ PYTHONPATH=. python epg/launch_local.py --test true
 
 
 def env_selector(env_id, seed=0):
-    if 'RandomHopper' == env_id:
+    if 'MetaKGEnv' == env_id:
+        env = Meta_KG(seed=seed)
+    elif 'RandomHopper' == env_id:
         env = RandomHopper(seed=seed)
     elif 'DirHopper' == env_id:
         env = DirHopper(seed=seed)
@@ -33,7 +35,7 @@ def env_selector(env_id, seed=0):
     return env
 
 
-def setup_es(seed=0, env_id='DirHopper', log_path='/tmp/out', n_cpu=1, **agent_args):
+def setup_es(seed=0, env_id='MetaKGEnv', log_path='/tmp/out', n_cpu=1, **agent_args):
     seed = MPI.COMM_WORLD.Get_rank() * 1000
     assert agent_args is not None
     np.random.seed(seed)
@@ -44,12 +46,12 @@ def setup_es(seed=0, env_id='DirHopper', log_path='/tmp/out', n_cpu=1, **agent_a
     return es
 
 
-def test_run(seed=0, env_id='DirHopper', log_path='/tmp/out', n_cpu=1, **agent_args):
+def test_run(seed=0, env_id='MetaKGEnv', log_path='/tmp/out', n_cpu=1, **agent_args):
     es = setup_es(seed, env_id, log_path, n_cpu, **agent_args)
     es.test(**agent_args, n_cpu=n_cpu)
 
 
-def run(seed=0, env_id='DirHopper', log_path='/tmp/out', n_cpu=1, **agent_args):
+def run(seed=0, env_id='MetaKGEnv', log_path='/tmp/out', n_cpu=1, **agent_args):
     es = setup_es(seed, env_id, log_path, n_cpu, **agent_args)
     es.train(**agent_args, n_cpu=n_cpu)
 
@@ -63,7 +65,7 @@ def main(test):
 
     # Experiment params
     # -----------------
-    env_id = 'DirHopper'
+    env_id = 'MetaKGEnv'
     # Number of noise vector seeds for ES
     outer_n_samples_per_ep = 8
     # Perform policy SGD updates every `inner_opt_freq` steps
