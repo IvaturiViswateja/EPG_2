@@ -10,7 +10,7 @@ import gym
 import numpy as np
 # from gym.envs import KG_env
 from gym.error import DependencyNotInstalled
-from env import Knowledgegraph_gym
+from gym.envs.KG_env import Knowledgegraph_gym
 from meta_env import MetaEnv
 from utils import *
 
