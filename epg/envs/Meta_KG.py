@@ -16,7 +16,7 @@ from utils import *
 
 dataPath = 'C:\\NSR\\NELL-995\\'
 
-class KG_task_env(MetaEnv,Knowledgegraph_gym):
+class Meta_KG(MetaEnv,Knowledgegraph_gym):
     def __init__(self, task_meta = None):
         Knowledgegraph_gym.__init__(self,dataPath)
         MetaEnv.__init__(self, task_meta)
